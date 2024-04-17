@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	로그인입니다.
+	회원가입입니다.
 </body>
 </html>
