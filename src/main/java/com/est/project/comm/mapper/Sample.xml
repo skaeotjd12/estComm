@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.est.project.comm.mapper.SampleMapper">
+  	
+       	<select id="selectMemList" resultType="String">
+        	SELECT MBR_ID, MBR_PW, MBR_NM  
+        	FROM tbl_member_m
+    	</select>
+    	</mapper>
