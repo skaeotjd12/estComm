@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SampleController {
 
 	
-	@GetMapping("/log")
-	public String name() {
-		return "common/log";
-	}
-	@GetMapping("/log")
-	public String assa() {
-		return "common/log";
-	}
+//	@GetMapping("/log")
+//	public String name() {
+//		return "common/log";
+//	}
+
 }
