@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SampleDto {
 	
-	private int MBR_SQ;
-	private String MBR_ID;
-	private String MBR_PW;
-	private String MBR_NM;
+	private int mbr_Sq;
+	private String mbr_Id;
+	private String mbr_Pw;
+	private String mbr_Nm;
 	
 }

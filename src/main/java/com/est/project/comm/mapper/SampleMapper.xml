@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.est.project.comm.mapper.SampleMapper">
+  	
+       	<select id="selectMemList" resultType="com.est.project.comm.domain.SampleDto">
+        	SELECT MBR_SQ, MBR_ID, MBR_PW, MBR_NM  
+        	FROM tbl_member_m
+    	</select>
+    	
+    	<insert id="insertMbr" parameterType="com.est.project.comm.domain.SampleDto">
+    		insert into tbl_member_m 
+    		(MBR_ID, MBR_PW, MBR_NM) values
+    		 (
+    		 #{mbr_Id}, #{mbr_Pw}, #{mbr_Nm} 
+    		 )
+    	</insert>
+    	
+</mapper>

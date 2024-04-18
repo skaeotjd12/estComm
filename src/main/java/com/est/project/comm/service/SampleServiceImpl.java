@@ -11,17 +11,26 @@ import com.est.project.comm.mapper.SampleMapper;
 
 import lombok.RequiredArgsConstructor;
 
-@Service
+
 @RequiredArgsConstructor
+@Service
 public class SampleServiceImpl implements SampleService {
 	
 	private final SampleMapper sampleMapper;
-	private final SampleService sampleService;
+
 	
 	@Override
-	public List<SampleDto> memView() {
+	public List<SampleDto> selectMemList() {
+	
 		List<SampleDto> sampleDtos = sampleMapper.selectMemList();
+		
 		return sampleDtos;
+	}
+
+	
+	@Override
+	public void insertMbr(SampleDto sampleDto) {
+		 sampleMapper.insertMbr(sampleDto);
 	}
 	
 	

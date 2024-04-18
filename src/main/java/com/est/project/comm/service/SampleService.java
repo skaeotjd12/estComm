@@ -6,5 +6,7 @@ import com.est.project.comm.domain.SampleDto;
 
 
 public interface SampleService {
-	public List<SampleDto> memView();
+	
+	public List<SampleDto> selectMemList();
+	public void  insertMbr(SampleDto sampleDto);
 }

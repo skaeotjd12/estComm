@@ -11,5 +11,5 @@ import com.est.project.comm.domain.SampleDto;
 public interface SampleMapper {
 	
 	List<SampleDto> selectMemList();
-
+	void insertMbr(SampleDto sampleDto);
 }
