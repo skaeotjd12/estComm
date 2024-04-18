@@ -1,12 +1,11 @@
 package com.est.project.contents.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import lombok.RequiredArgsConstructor;
+import com.est.project.contents.domain.Board;
 
-@Service
-@RequiredArgsConstructor
-public class ContentsService {
+public interface ContentsService {
 
-	
+	List<Board> getBoardList(String category, String detailCategory);
+
 }
