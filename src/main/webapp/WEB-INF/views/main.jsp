@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>¸ÞÀÎ</h1>
+	<h1>ë©”ì¸</h1>
 	
-	<h2>°Ô½ÃÆÇ ¸ñ·Ï</h2>
+	<h2>ê²Œì‹œíŒ ëª©ë¡</h2>
 	<ul>
 		<li><a href="/board?category=QnA">Q&A<a/></li>
-		<li><a href="/board?category=INTELL">Áö½ÄÀÎ<a/></li>
-		<li><a href="/board?category=EVT">ÀÌº¥Æ®<a/></li>
-		<li><a href="/board?category=COMM">Ä¿¹Â´ÏÆ¼<a/></li>
-		<li><a href="/board?category=NOTI">°øÁö»çÇ×<a/></li>
+		<li><a href="/board?category=INTELL">ì§€ì‹ì¸<a/></li>
+		<li><a href="/board?category=EVT">ì´ë²¤íŠ¸<a/></li>
+		<li><a href="/board?category=COMM">ì»¤ë®¤ë‹ˆí‹°<a/></li>
+		<li><a href="/board?category=NOTI">ê³µì§€ì‚¬í•­<a/></li>
 	</ul>
 </body>
 </html>

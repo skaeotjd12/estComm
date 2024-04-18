@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,9 +25,11 @@ public class ContentsController {
 	
 	@GetMapping("/board")
 	public String getBoardList(@RequestParam(required = true) String category,
-						@RequestParam(required = false) String detailCategory) {
+						@RequestParam(required = false) String detailCategory
+						, Model model) {
 		
 		List<Board> list = contentsService.getBoardList(category, detailCategory);
+		model.addAttribute(list);
 		System.out.println(list);
 		return "contents/board";
 	}
