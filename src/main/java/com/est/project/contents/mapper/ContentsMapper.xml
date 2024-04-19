@@ -4,42 +4,51 @@
 
 <mapper namespace="com.est.project.contents.mapper.ContentsMapper">
 	
+	<sql id="boardColumns">
+    	BRD_SQ
+    	, MBR_SQ
+   	 	, BRD_TTL
+    	, BRD_CONT
+    	, BRD_DEL_YN
+    	, BRD_RECMMND_CNT
+    	, BRD_VW_CNT
+    	, BRD_SLT_YN
+    	, BRD_SLT_CMMT_SQ
+    	, BRD_DIV_CD
+    	, BRD_DTL_DIV_CD
+    	, BRD_NOTI_DIV_CD
+    	, BRD_SLT_DIV_CD
+    	, BRD_REGIST_DTM
+	</sql>
 	
-	
-	
+	<sql id="boardConditions">
+		WHERE BRD_DIV_CD = #{category}
+			<if test="detailCategory != null and detailCategory != ''">
+				AND BRD_DTL_DIV_CD = #{detailCategory}
+			</if>
+		  	AND  BRD_DEL_YN = 'N'
+		  	AND BRD_NOTI_DIV_CD = 'N'
+	</sql>
 
 	<select id="selectBoardList" parameterType="map" resultType="com.est.project.contents.domain.Board">
 	
-		SELECT BRD_SQ
-			 , MBR_SQ
-			 , BRD_TTL
-			 , BRD_CONT
-			 , BRD_DEL_YN
-			 , BRD_RECMMND_CNT
-			 , BRD_VW_CNT
-			 , BRD_SLT_YN
-			 , BRD_SLT_CMMT_SQ
-			 , BRD_DIV_CD
-			 , BRD_DTL_DIV_CD
-			 , BRD_NOTI_DIV_CD
-			 , BRD_SLT_DIV_CD
-			 , BRD_REGIST_DTM
-			 , BRD_MDFY_DTM
-		FROM est.tbl_board_m 
-		WHERE BRD_DIV_CD = #{category}
-			<if test="detailCategory != null">
-				AND BRD_DTL_DIV_CD = #{detailCategory}
-			</if>
-		  AND  BRD_DEL_YN = 'N'
-		  AND BRD_NOTI_DIV_CD = 'N'
+		SELECT 
+			<include refid="boardColumns"/>
+		FROM tbl_board_m 
+		<include refid="boardConditions" />
 		ORDER BY BRD_REGIST_DTM DESC  
-		
+		LIMIT #{limit} OFFSET #{offset}
 	</select>
 	
 	
+	<select id="selectPagingCount" parameterType="map" resultType="Integer">
+		SELECT count(*)
+		FROM tbl_board_m 
+		<include refid="boardConditions" />
+	</select>
 	
 	
-	
+
 
     
 

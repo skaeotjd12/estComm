@@ -14,6 +14,6 @@ public interface ContentsMapper {
 	
 	
 	List<Board> selectBoardList(Map<String, Object> map);
-	
+	Integer selectPagingCount(Map<String, Object> map);
 	
 }
