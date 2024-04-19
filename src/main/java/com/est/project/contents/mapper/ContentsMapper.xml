@@ -27,11 +27,21 @@
 				AND BRD_DTL_DIV_CD = #{detailCategory}
 			</if>
 		  	AND  BRD_DEL_YN = 'N'
-		  	AND BRD_NOTI_DIV_CD = 'N'
 	</sql>
 
 	<select id="selectBoardList" parameterType="map" resultType="com.est.project.contents.domain.Board">
-	
+		<if test="category != 'NOTI'">
+		(
+		SELECT 
+			<include refid="boardColumns"/>
+		FROM tbl_board_m
+		WHERE BRD_NOTI_DIV_CD = 'Y'
+		ORDER BY BRD_REGIST_DTM DESC
+		LIMIT 4
+		)
+		UNION
+		</if>
+		(
 		SELECT 
 			<include refid="boardColumns"/>
 		FROM tbl_board_m 
@@ -40,8 +50,10 @@
 				CASE #{sorting} WHEN "1" THEN BRD_REGIST_DTM
 								WHEN "2" THEN BRD_VW_CNT
 								WHEN "3" THEN BRD_RECMMND_CNT
-				END DESC  
+				END DESC 
+				 
 		LIMIT #{limit} OFFSET #{offset}
+		)
 	</select>
 	
 	

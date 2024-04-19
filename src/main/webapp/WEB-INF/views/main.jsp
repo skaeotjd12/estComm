@@ -20,17 +20,37 @@
 	</ul>
 	
 
+	<h1 id="boardCategoryName"></h1>
 	<select hidden id="detailCategoryList"></select>
 	<select hidden id="sorting">
 		<option value="1">최신순</option>
 		<option value="2">조회순</option>
 		<option value="3">추천순</option>
 	</select>
+	<button hidden id="writeBoardBtn"></button>
 	<table id="board">
 	
 	</table>
 	
 	<div id="paging">
+	</div>
+	
+	
+	
+	<div hidden id="write">
+		<button>등록</button>
+		<button>취소</button>
+	</div>
+	
+	<div hidden id="writeInputDiv">
+		<label for="boardTitle">제목 :</label>
+		<input type="text" id="boardTitle">
+		<label for="boardContent">내용 :</label>
+		<input type="text" id="boardContent">
+		<label for="detailCategory">관련 탭 :</label>
+		<select type="text" id="detailCategory">
+			<option>테스트</option>
+		</select>
 	</div>
 	
 <script type="text/javascript">
@@ -45,9 +65,17 @@
 			 detailCategory = "";
 			 pageNum = "1";			
 			 sorting = "";
-			 
+			 $("#writeInputDiv").hide();
+			 $("#board").show();
+			 $("#paging").show();
 			 mainCategory = $(this).attr("id");
-		     
+		     $("#boardCategoryName").text($(this).text()); 
+		     let writeBoardBtn = $("#writeBoardBtn");
+			 writeBoardBtn.show();
+			 writeBoardBtn.val(mainCategory);
+			 writeBoardBtn.text($(this).text() + " 글쓰기");
+			 $("#write").hide();
+			 
 		     let detailCategoryList = $('#detailCategoryList');
 		     
 		     detailCategoryList.show();
@@ -93,9 +121,11 @@
 		
 		
 		$('#detailCategoryList').change(function() {
+			
 		    detailCategory = $(this).val();
-		    
+		    sorting = "1";
 		    getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
+		    $('#sorting').val(sorting);
 		});
 		
 		
@@ -113,6 +143,18 @@
 		        getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
 		 });
 		
+		 
+		 
+		 $("#writeBoardBtn").on('click', function() {
+			let category = $(this).val();
+			$("#detailCategoryList").hide();
+			$("#sorting").hide();
+			$("#writeBoardBtn").hide();
+			$("#board").hide();
+			$("#paging").hide();
+			$("#write").show();
+			$("#writeInputDiv").show();
+		})
 	});	
 	
 	
@@ -164,17 +206,23 @@
 		let tmp = ``;
 		
 		if (result.prev) {
-		tmp += "<div class='pageNumber'>" + "1" + "</div>"
-		}
+			tmp += "<div class='pageNumber'>" + "1" + "</div>"
+			}
+		
+		if (result.prev) {
+			tmp += "<span>" + "<" + "</span>"
+			}
 		
 		 $.each(result.pageNumList, function(index, pageNum) {
 		        tmp += "<span class='pageNumber'>" + pageNum + "</span>";
 		    });
 		
-		
+		 if (result.next) {
+				tmp += "<span>" + ">" + "</span>"
+				}
 		if (result.next) {
-		tmp += "<div class='pageNumber'>" + result.totalPage + "</div>"
-		}
+			tmp += "<div class='pageNumber'>" + result.totalPage + "</div>"
+			}
 		$('#paging').html(tmp);
 	};
 	
