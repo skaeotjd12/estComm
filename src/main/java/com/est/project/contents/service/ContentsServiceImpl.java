@@ -19,7 +19,7 @@ public class ContentsServiceImpl implements ContentsService{
 	private final ContentsMapper contentsMapper;
 	
 	@Override
-	public PageResponse<Board> getBoardList(String category, String detailCategory, Integer page, Integer pageSize) {
+	public PageResponse<Board> getBoardList(String category, String detailCategory, Integer page, Integer pageSize, String sorting) {
 		PageRequest pageRequest = new PageRequest(page, pageSize);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -27,6 +27,7 @@ public class ContentsServiceImpl implements ContentsService{
 		map.put("detailCategory", detailCategory);
 		map.put("offset", pageRequest.getOffset());
 		map.put("limit", pageRequest.getPageSize());
+		map.put("sorting", sorting);
 		
 		List<Board> list = contentsMapper.selectBoardList(map);
 		Integer count = contentsMapper.selectPagingCount(map);

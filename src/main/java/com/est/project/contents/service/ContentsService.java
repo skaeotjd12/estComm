@@ -7,6 +7,6 @@ import com.est.project.contents.domain.PageResponse;
 
 public interface ContentsService {
 
-	PageResponse<Board> getBoardList(String category, String detailCategory, Integer page, Integer pageSize);
+	PageResponse<Board> getBoardList(String category, String detailCategory, Integer page, Integer pageSize, String sorting);
 
 }

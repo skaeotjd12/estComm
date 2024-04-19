@@ -36,7 +36,11 @@
 			<include refid="boardColumns"/>
 		FROM tbl_board_m 
 		<include refid="boardConditions" />
-		ORDER BY BRD_REGIST_DTM DESC  
+		ORDER BY 
+				CASE #{sorting} WHEN "1" THEN BRD_REGIST_DTM
+								WHEN "2" THEN BRD_VW_CNT
+								WHEN "3" THEN BRD_RECMMND_CNT
+				END DESC  
 		LIMIT #{limit} OFFSET #{offset}
 	</select>
 	

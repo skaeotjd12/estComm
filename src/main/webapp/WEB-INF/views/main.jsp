@@ -19,24 +19,33 @@
 		<li class="category" id="NOTI">공지사항</li>
 	</ul>
 	
-	
+
 	<select hidden id="detailCategoryList"></select>
 	<select hidden id="sorting">
-		<option value="REGIST">최신순</option>
-		<option value="VW">조회순</option>
-		<option value="RECMMND">추천순</option>
+		<option value="1">최신순</option>
+		<option value="2">조회순</option>
+		<option value="3">추천순</option>
 	</select>
 	<table id="board">
 	
 	</table>
+	
+	<div id="paging">
+	</div>
 	
 <script type="text/javascript">
 	$(document).ready(function () {
 		
 		let mainCategory = "";
 		let detailCategory = "";
-		
+		let pageNum = "1";
+		let sorting = "";
 		$(".category").click(function () {
+			 mainCategory = "";
+			 detailCategory = "";
+			 pageNum = "1";			
+			 sorting = "";
+			 
 			 mainCategory = $(this).attr("id");
 		     
 		     let detailCategoryList = $('#detailCategoryList');
@@ -78,17 +87,7 @@
 		     }
 		     
 		     
-		     $.ajax({
-		    	type: "GET",
-		    	url: "/board?category=" + mainCategory,
-		    	dataType: "json",
-		    	success: function (result) {
-		    		showView(result);
-				},
-				error: function (xhr, status, error) {
-					alert("실패");
-				}
-		     });
+		     getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
 		});
 		
 		
@@ -96,48 +95,88 @@
 		$('#detailCategoryList').change(function() {
 		    detailCategory = $(this).val();
 		    
-		    $.ajax({
+		    getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
+		});
+		
+		
+		
+		$('#sorting').change(function() {
+			sorting = $(this).val();
+			getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
+		});
+		
+
+		
+		 $('#paging').on('click', '.pageNumber', function() {
+			 	pageNum = $(this).text();
+		        console.log(pageNum);
+		        getBoardAjax(mainCategory, detailCategory, sorting, pageNum);
+		 });
+		
+	});	
+	
+	
+	function getBoardAjax(mainCategory, detailCategory, sorting, pageNum) {
+		 $.ajax({
 		        type: "GET",
-		        url: "/board?category=" + mainCategory + "&detailCategory=" + detailCategory,
+		        url: "/board?category=" + mainCategory + "&detailCategory=" + detailCategory + "&sorting=" + sorting + "&page=" + pageNum,
 		        dataType: "json",
 		        success: function (result) {
 		            showView(result);
+		            showPagination(result);
 		        },
 		        error: function (xhr, status, error) {
 		            alert("실패");
 		        }
 		    });
-		});
-		
-
-	});	
+	}
 	
 	
 	function showView(result) {
 		console.log(result);
 		let tmp = `
 			<tr>
-				<td>카테고리</td>
+				<td style="background-color: #81F781">카테고리</td>
 				<td>제목</td>
 				<td>작성자</td>
-				<td>작성일</td>
-				<td>조회수</td>
-				<td>추천수</td>
+				<td style="background-color: #EBBEDF">작성일</td>
+				<td style="background-color: #F5DA81">조회수</td>
+				<td style="background-color: #81DAF5">추천수</td>
 			</tr>
 		`;
 		$.each(result.dtoList, function(index, obj) {
         tmp += "<tr>" +
-               "<td>" + convertDetailCategory(obj.brd_DTL_DIV_CD) + "</td>" +
+               "<td style='background-color: #81F781'>" + convertDetailCategory(obj.brd_DTL_DIV_CD) + "</td>" +
                "<td>" + obj.brd_TTL + "</td>" +
                "<td>" + obj.mbr_SQ + "</td>" +
-               "<td>" + convertTimestamp(obj.brd_REGIST_DTM) + "</td>" +
-               "<td>" + obj.brd_VW_CNT + "</td>" +
-               "<td>" + obj.brd_RECMMND_CNT + "</td>" +
+               "<td style='background-color: #EBBEDF'>" + convertTimestamp(obj.brd_REGIST_DTM) + "</td>" +
+               "<td style='background-color: #F5DA81'>" + obj.brd_VW_CNT + "</td>" +
+               "<td style='background-color: #81DAF5'>" + obj.brd_RECMMND_CNT + "</td>" +
                "</tr>";
     	});
 		
+		tmp += ""
+		
 		$('#board').html(tmp);
 	}
+	
+	function showPagination(result) {
+		let tmp = ``;
+		
+		if (result.prev) {
+		tmp += "<div class='pageNumber'>" + "1" + "</div>"
+		}
+		
+		 $.each(result.pageNumList, function(index, pageNum) {
+		        tmp += "<span class='pageNumber'>" + pageNum + "</span>";
+		    });
+		
+		
+		if (result.next) {
+		tmp += "<div class='pageNumber'>" + result.totalPage + "</div>"
+		}
+		$('#paging').html(tmp);
+	};
 	
 	
 	function convertDetailCategory(brd_DTL_DIV_CD) {

@@ -30,9 +30,10 @@ public class ContentsController {
 	public PageResponse<Board> getBoardList(@RequestParam(required = true) String category,
 						@RequestParam(required = false) String detailCategory,
 						@RequestParam(defaultValue = "1" , name = "page") Integer page,
-                        @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize) {
+                        @RequestParam(defaultValue = "10", name = "pageSize") Integer pageSize,
+                        @RequestParam(defaultValue = "1") String sorting) {
 		 
-		PageResponse<Board> pageResponse = contentsService.getBoardList(category, detailCategory, page, pageSize);
+		PageResponse<Board> pageResponse = contentsService.getBoardList(category, detailCategory, page, pageSize, sorting);
 		return pageResponse;
 	}
 }
